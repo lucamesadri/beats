@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Gêneros</title>
+</head>
+<body>
+<h1>Novo Gêneros</h1>
+<p><a th:href="@{/genero}">Gêneros</a> / Novo</p>
+<br>
+<form th:action="@{/genero/salvar}" th:object="${elemento}" method="post">
+    <table>
+        <tr>
+            <td>Nome</td>
+            <td><input type="text" th:field="*{nome}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button type="submit">Salvar</button></td>
+        </tr>
+    </table>
+</form>
+<p th:if="${erro != null}" th:text="${erro}"></p>
+<br>
+</body>
+</html>

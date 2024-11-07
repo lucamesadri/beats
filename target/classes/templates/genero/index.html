@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gênero</title>
+</head>
+<body>
+<h1>Gênero</h1>
+<p><a th:href="@{/genero/novo}">Novo</a></p>
+<br>
+<table th:if="${lista.size()} > 0">
+    <tr>
+        <td>ID</td><td>Nome</td>
+    </tr>
+    <tr th:each="e : ${lista}">
+        <td th:text="${e.id}">ID</td>
+        <td  th:text="${e.nome}">Nome</td>
+        <td><a th:href="@{/genero/{id}(id=${e.id})}">Editar</a></td>
+    </tr>
+</table>
+<p th:unless="${lista.size()} > 0">Não há gêneros cadastrados.</p>
+<br>
+</body>
+</html>
