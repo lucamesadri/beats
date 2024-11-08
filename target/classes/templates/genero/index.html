@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Gêneros</title>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
-<h1>Gêneros</h1>
+<h1 class="text-3xl font-bold underline">Gêneros</h1>
 <p><a th:href="@{/genero/novo}">Novo</a></p>
 <br>
 <table th:if="${lista.size()} > 0">
