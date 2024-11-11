@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+<<<<<<< Updated upstream
     <title>Gênero</title>
 </head>
 <body>
@@ -20,5 +21,49 @@
 </table>
 <p th:unless="${lista.size()} > 0">Não há gêneros cadastrados.</p>
 <br>
+=======
+    <title>Gêneros</title>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Gêneros</h1>
+    <p class="mb-4"><a href="/genero/novo" class="text-blue-500">Novo Gênero</a></p>
+    <table class="min-w-full bg-white shadow-md rounded-lg">
+        <thead>
+        <tr class="bg-gray-200">
+            <th class="px-4 py-2 text-left">ID</th>
+            <th class="px-4 py-2 text-left">Nome</th>
+            <th class="px-4 py-2 text-center">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${lista}">
+            <td class="border px-4 py-2" th:text="${e.id}">ID</td>
+            <td class="border px-4 py-2" th:text="${e.nome}">Nome</td>
+            <td class="border px-4 py-2 text-center">
+                <a href="/genero/{id}" th:href="@{/genero/{id}(id=${e.id})}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                <form th:action="@{/genero/{id}/excluir(id=${e.id})}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?')" class="inline-block ml-2">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="text-red-500 hover:text-red-700">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p th:unless="${lista.size()} > 0" class="mt-4 text-gray-500">Não há gêneros cadastrados.</p>
+</div>
+>>>>>>> Stashed changes
 </body>
 </html>
