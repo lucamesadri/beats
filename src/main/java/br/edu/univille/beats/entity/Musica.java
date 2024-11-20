@@ -3,6 +3,7 @@ package br.edu.univille.beats.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Data
@@ -14,6 +15,10 @@ public class Musica {
     private Long id;
 
     private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "criador_id") // Nome da coluna no banco de dados
+    private Usuario criador; // Relacionamento com a entidade Usuario
 
     @ManyToOne
     private Genero genero;
