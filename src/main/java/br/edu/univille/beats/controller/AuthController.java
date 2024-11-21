@@ -10,38 +10,61 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("usuario") // Define que o atributo "usuario" será armazenado na sessão
+@SessionAttributes("usuario")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
-    // Exibe o formulário de login
     @GetMapping("/login")
     public String showLoginForm() {
         return "login/login"; // Retorna o template de login
     }
 
-    // Processa o login do usuário
     @PostMapping("/login")
     public String login(@RequestParam String email,
                         @RequestParam String senha,
                         Model model) {
-        // Chama o serviço de autenticação
         boolean isAuthenticated = authService.authenticate(email, senha);
 
         if (isAuthenticated) {
-            // Supondo que o serviço de autenticação retorna um objeto Usuario
             Object usuario = authService.getAuthenticatedUser(email);
-
-            // Armazena o usuário no modelo para a sessão
             model.addAttribute("usuario", usuario);
-
-            // Redireciona para a página de perfil após login bem-sucedido
-            return "redirect:/profile";
+            return "redirect:/profile"; // Redireciona para o perfil após login
         } else {
             model.addAttribute("error", "Credenciais inválidas.");
-            return "login/login"; // Retorna à página de login com erro
+            return "login/login";
         }
+    }
+
+    @GetMapping("/register")
+    public String showRegisterForm() {
+        return "login/register";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String nome,
+                               @RequestParam String email,
+                               @RequestParam String senha,
+                               @RequestParam String confirmarSenha,
+                               Model model) {
+        if (!senha.equals(confirmarSenha)) {
+            model.addAttribute("error", "As senhas não conferem.");
+            return "login/register";
+        }
+
+        boolean isRegistered = authService.register(nome, email, senha);
+
+        if (isRegistered) {
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "Erro ao registrar usuário. Tente novamente.");
+            return "login/register";
+        }
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home"; // Página inicial
     }
 }

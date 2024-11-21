@@ -26,4 +26,23 @@ public class AuthService {
         // Busca o usuário no banco de dados pelo email
         return usuarioRepository.findByEmail(email);
     }
+
+    // Este método registra um novo usuário
+    public boolean register(String nome, String email, String senha) {
+        // Verifica se o email já está registrado
+        Usuario usuarioExistente = usuarioRepository.findByEmail(email);
+        if (usuarioExistente != null) {
+            return false; // O email já está em uso, não pode registrar
+        }
+
+        // Criação de um novo usuário
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(nome);
+        novoUsuario.setEmail(email);
+        novoUsuario.setSenha(senha); // Lembre-se de criptografar a senha em um ambiente real!
+
+        // Salva o novo usuário no banco de dados
+        usuarioRepository.save(novoUsuario);
+        return true; // Retorna true indicando que o usuário foi registrado com sucesso
+    }
 }
