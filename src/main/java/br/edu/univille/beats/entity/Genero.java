@@ -1,23 +1,30 @@
 package br.edu.univille.beats.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@Data
-@NoArgsConstructor
+
 @Entity
 public class Genero {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
 
-    @OneToMany(mappedBy = "genero")
-    private List<Musica> musicas;
+    public Long getId() {
+        return id;
+    }
 
-    @ManyToMany
-    private List<Artista> artistas;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
