@@ -4,6 +4,7 @@ import br.edu.univille.beats.entity.Usuario;
 import br.edu.univille.beats.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -22,5 +23,11 @@ public class UsuarioService {
         }
 
         return null; // Caso contrário, retorna null
+    }
+
+    // Método para buscar um usuário por ID
+    public Usuario findById(Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.orElse(null);  // Retorna o usuário ou null caso não encontrado
     }
 }

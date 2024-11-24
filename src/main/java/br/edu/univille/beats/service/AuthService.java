@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    // Injeção do repositório para acesso ao banco de dados
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 

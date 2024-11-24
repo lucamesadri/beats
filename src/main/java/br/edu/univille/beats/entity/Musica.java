@@ -17,8 +17,8 @@ public class Musica {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "criador_id") // Nome da coluna no banco de dados
-    private Usuario criador; // Relacionamento com a entidade Usuario
+    @JoinColumn(name = "criador_id")
+    private Usuario criador;
 
     @ManyToOne
     private Genero genero;

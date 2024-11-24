@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("usuario") // Armazena o "usuario" na sessão
+@SessionAttributes("usuario")
 public class ProfileController {
 
     @GetMapping("/profile")
     public String showProfilePage(Model model) {
-        // Obtém o usuário da sessão
+
         Usuario usuario = (Usuario) model.getAttribute("usuario");
 
 

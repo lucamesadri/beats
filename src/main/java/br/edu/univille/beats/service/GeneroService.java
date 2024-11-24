@@ -2,9 +2,7 @@ package br.edu.univille.beats.service;
 
 import br.edu.univille.beats.entity.Genero;
 import br.edu.univille.beats.repositorio.GeneroRepository;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,21 +10,27 @@ import java.util.Optional;
 
 @Service
 public class GeneroService {
+
     @Autowired
-    private GeneroRepository repository;
-    public Optional<Genero> obterPeloId(long id){
-        return repository.findById(id);
+    private GeneroRepository generoRepository;
+
+    // Obter todos os gêneros
+    public List<Genero> obterTodos() {
+        return generoRepository.findAll();
     }
-    public List<Genero> obterTodos(){
-        return repository.findAll(Sort.by("nome"));
+
+    // Obter um gênero pelo id
+    public Optional<Genero> obterPeloId(long id) {
+        return generoRepository.findById(id);
     }
-    public void salvar(Genero genero) {
-        if(Strings.isBlank(genero.getNome())){
-            throw new RuntimeException("Nome não informado.");
-        }
-        repository.save(genero);
-    }
+
+    // Excluir um gênero
     public void excluir(Genero genero) {
-        repository.delete(genero);
+        generoRepository.delete(genero);
+    }
+
+    // Salvar ou atualizar um gênero
+    public Genero salvar(Genero genero) {
+        return generoRepository.save(genero);
     }
 }

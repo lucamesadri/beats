@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService; // Injeta o serviço de usuário
+    private UsuarioService usuarioService;
 
     @PostMapping
     public String login(@RequestParam("email") String email,
@@ -24,10 +24,10 @@ public class UsuarioController {
 
         if (usuario != null) {
             redirectAttributes.addFlashAttribute("usuario", usuario);
-            return "redirect:/profile"; // Redireciona para a página de perfil
+            return "redirect:/profile";
         }
 
         redirectAttributes.addFlashAttribute("error", "Email ou senha inválidos.");
-        return "redirect:/profile"; // Volta para a página de login em caso de erro
+        return "redirect:/profile";
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MusicaService {
@@ -13,13 +14,19 @@ public class MusicaService {
     @Autowired
     private MusicaRepository musicaRepository;
 
-    // Para buscar músicas criadas por um usuário
+    public Musica save(Musica musica) {
+        return musicaRepository.save(musica);
+    }
+
     public List<Musica> getMusicasByUsuario(Long usuarioId) {
         return musicaRepository.findAllByCriador_Id(usuarioId);
     }
 
-    // Para buscar músicas favoritas de um usuário
     public List<Musica> getMusicasFavoritas(Long usuarioId) {
         return musicaRepository.findMusicasFavoritasByUsuario(usuarioId);
+    }
+
+    public Optional<Musica> findById(Long id) {
+        return musicaRepository.findById(id);
     }
 }

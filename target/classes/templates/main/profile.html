@@ -8,7 +8,6 @@
 </head>
 <body class="bg-white text-gray-800">
 <div class="container mx-auto px-6">
-  <!-- Header -->
   <header class="py-4 border-b-2 border-gray-200">
     <nav class="flex justify-between items-center">
       <div class="logo text-2xl font-bold">🎵 Beats</div>
@@ -16,26 +15,21 @@
         <li><a href="/contact" class="hover:text-gray-600">Contact</a></li>
         <li><a href="/about" class="hover:text-gray-600">About</a></li>
         <li><a href="/main/profile" class="hover:text-gray-600">Profile</a></li>
-        <!-- Display Logout button -->
         <li>
           <form action="/logout" method="post">
             <button type="submit" class="hover:text-gray-600">Log out</button>
           </form>
         </li>
-        <!-- Display Login link when user is not logged in -->
-
       </ul>
     </nav>
   </header>
 
-  <!-- Profile Section -->
   <main class="py-12">
     <section class="text-center mb-12">
       <h1 class="text-3xl font-bold mb-4">Welcome to your Profile</h1>
       <p class="text-gray-600">Manage your account and view your saved tracks here.</p>
     </section>
 
-    <!-- Profile with Buttons -->
     <section class="mb-12">
       <div class="bg-gray-100 rounded-lg shadow-lg p-6">
         <div class="flex justify-between items-center">
@@ -52,9 +46,14 @@
             <button class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300">
               My songs
             </button>
-            <button class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300">
-              Import a song
-            </button>
+            <!-- Ajustado o botão "Import a song" -->
+            <form action="/musicas/import" method="POST">
+              <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                Import a song
+              </button>
+            </form>
+
+
             <button class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300">
               Share my profile
             </button>
@@ -63,40 +62,19 @@
       </div>
     </section>
 
-    <!-- Saved Tracks Table -->
+    <!-- Section for user's created tracks -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Your Saved Tracks</h2>
-      <table class="table-auto w-full text-left bg-white rounded-lg shadow-lg">
+      <h2 class="text-2xl font-bold mb-6">Your Created Tracks</h2>
+      <table id="savedTracks" class="table-auto w-full text-left bg-white rounded-lg shadow-lg">
         <thead class="bg-gray-100 text-gray-600">
         <tr>
           <th class="px-4 py-2">Title</th>
-          <th class="px-4 py-2">Time</th>
-          <th class="px-4 py-2">Bpm</th>
-          <th class="px-4 py-2">Tags</th>
-          <th class="px-4 py-2">Actions</th>
+          <th class="px-4 py-2">Genre</th>
+          <th class="px-4 py-2">Creator</th>
         </tr>
         </thead>
         <tbody>
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 border-b">Music Title</td>
-          <td class="px-4 py-2 border-b">2:00</td>
-          <td class="px-4 py-2 border-b">150</td>
-          <td class="px-4 py-2 border-b"><input type="text" class="bg-gray-200 px-2 py-1 rounded" /></td>
-          <td class="px-4 py-2 border-b">
-            <button class="p-2 text-purple-500 hover:text-purple-600">❤️</button>
-            <button class="p-2 text-purple-500 hover:text-purple-600">⏩</button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 border-b">Music Title</td>
-          <td class="px-4 py-2 border-b">2:00</td>
-          <td class="px-4 py-2 border-b">150</td>
-          <td class="px-4 py-2 border-b"><input type="text" class="bg-gray-200 px-2 py-1 rounded" /></td>
-          <td class="px-4 py-2 border-b">
-            <button class="p-2 text-purple-500 hover:text-purple-600">❤️</button>
-            <button class="p-2 text-purple-500 hover:text-purple-600">⏩</button>
-          </td>
-        </tr>
+        <!-- Rows will be dynamically inserted here -->
         </tbody>
       </table>
     </section>
@@ -112,5 +90,27 @@
     </div>
   </footer>
 </div>
+
+<script>
+  // O ID do usuário será injetado automaticamente via Thymeleaf
+  const usuarioId = /*[[${usuario.id}]]*/ '';
+
+  fetch(`/musicas/usuario/${usuarioId}`)
+    .then(response => response.json())
+    .then(data => {
+      const tableBody = document.querySelector('#savedTracks tbody');
+      data.forEach(musica => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-4 py-2 border-b">${musica.nome}</td>
+          <td class="px-4 py-2 border-b">${musica.genero ? musica.genero.nome : 'N/A'}</td>
+          <td class="px-4 py-2 border-b">${musica.criador ? musica.criador.nome : 'N/A'}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch(error => console.error("Error fetching user tracks:", error));
+</script>
+
 </body>
 </html>
