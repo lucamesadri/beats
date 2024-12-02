@@ -10,14 +10,20 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+    private String email;
+    private String senha;
 
     @ManyToMany
+    @JoinTable(
+            name = "usuario_musica_favoritas",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "musica_id")
+    )
     private List<Musica> musicasFavoritas;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Curtida> curtidas;
 }

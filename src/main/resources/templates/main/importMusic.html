@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beats - Import Music</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800">
+<div class="container mx-auto px-6">
+  <header class="py-4 border-b-2 border-gray-200">
+    <nav class="flex justify-between items-center">
+      <div class="logo text-2xl font-bold">🎵 Beats</div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="/contact" class="hover:text-gray-600">Contact</a></li>
+        <li><a href="/about" class="hover:text-gray-600">About</a></li>
+        <li><a href="/main/profile" class="hover:text-gray-600">Profile</a></li>
+        <li>
+          <form action="/logout" method="post">
+            <button type="submit" class="hover:text-gray-600">Log out</button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="py-12">
+    <section class="text-center mb-12">
+      <h1 class="text-3xl font-bold mb-4">Import a New Song</h1>
+      <p class="text-gray-600">Upload your audio file and its cover.</p>
+    </section>
+
+    <section class="mb-12">
+      <div class="bg-gray-100 rounded-lg shadow-lg p-6">
+        <form action="/musicas/import" method="POST" enctype="multipart/form-data">
+          <div class="mb-4">
+            <label for="nome" class="block text-lg font-semibold">Song Title:</label>
+            <input type="text" id="nome" name="nome" class="w-full px-4 py-2 border rounded-lg text-gray-800" required>
+          </div>
+
+          <div class="mb-4">
+            <label for="generoId" class="block text-lg font-semibold">Genre:</label>
+            <select id="generoId" name="generoId" class="w-full px-4 py-2 border rounded-lg text-gray-800" required>
+              <option value="1">Rock</option>
+              <option value="2">Pop</option>
+              <option value="3">Jazz</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label for="audioFile" class="block text-lg font-semibold">Upload Song Audio:</label>
+            <input type="file" id="audioFile" name="audioFile" accept="audio/*" class="w-full px-4 py-2 border rounded-lg text-gray-800" required>
+          </div>
+
+          <div class="mb-4">
+            <label for="coverFile" class="block text-lg font-semibold">Upload Song Cover:</label>
+            <input type="file" id="coverFile" name="coverFile" accept="image/*" class="w-full px-4 py-2 border rounded-lg text-gray-800">
+          </div>
+
+          <div class="flex justify-between items-center">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+              Import Music
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-6 border-t-2 border-gray-200 text-center text-gray-600">
+    <p>&copy; 2024 Beats. All rights reserved.</p>
+    <div class="flex justify-center space-x-4 mt-4">
+      <a href="#" class="hover:text-purple-500">Privacy Policy</a>
+      <a href="#" class="hover:text-purple-500">Terms of Service</a>
+      <a href="#" class="hover:text-purple-500">FAQ</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

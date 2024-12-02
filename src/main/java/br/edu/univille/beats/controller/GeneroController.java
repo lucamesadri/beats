@@ -15,51 +15,49 @@ public class GeneroController {
     private GeneroService service;
 
     @GetMapping
-    public ModelAndView index(){
+    public ModelAndView index() {
         var mv = new ModelAndView("genero/index");
-        mv.addObject("lista",service.obterTodos());
+        mv.addObject("lista", service.obterTodos());
         return mv;
     }
-    @GetMapping
-    @RequestMapping("/novo")
-    public ModelAndView novo(){
+
+    @GetMapping("/novo")
+    public ModelAndView novo() {
         var mv = new ModelAndView("genero/novo");
-        mv.addObject("elemento",new Genero());
+        mv.addObject("elemento", new Genero());
         return mv;
     }
-    @GetMapping
-    @RequestMapping("/{id}")
-    public ModelAndView editar(@PathVariable long id){
+
+    @GetMapping("/{id}")
+    public ModelAndView editar(@PathVariable long id) {
         var mv = new ModelAndView("genero/editar");
         var opt = service.obterPeloId(id);
-        if(opt.isPresent()) {
+        if (opt.isPresent()) {
             mv.addObject("elemento", opt.get());
             return mv;
         }
         return new ModelAndView("redirect:/genero");
     }
-    @GetMapping
-    @RequestMapping("/{id}/excluir")
-    public ModelAndView excluir(@PathVariable long id){
-        var mv = new ModelAndView("genero/editar");
+
+    @GetMapping("/{id}/excluir")
+    public ModelAndView excluir(@PathVariable long id) {
+        var mv = new ModelAndView("redirect:/genero");
         var opt = service.obterPeloId(id);
-        if(opt.isPresent()) {
+        if (opt.isPresent()) {
             service.excluir(opt.get());
         }
-        return new ModelAndView("redirect:/genero");
+        return mv;
     }
-    @PostMapping
-    @RequestMapping("/salvar")
-    public ModelAndView salvarNovo(@ModelAttribute("elemento") Genero genero){
-        try
-        {
+
+    @PostMapping("/salvar")
+    public ModelAndView salvarNovo(@ModelAttribute("elemento") Genero genero) {
+        try {
             service.salvar(genero);
             return new ModelAndView("redirect:/genero");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             var mv = new ModelAndView("genero/novo");
-            mv.addObject("elemento",genero);
-            mv.addObject("erro",e.getMessage());
+            mv.addObject("elemento", genero);
+            mv.addObject("erro", e.getMessage());
             return mv;
         }
     }
